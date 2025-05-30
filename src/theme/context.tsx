@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { darkColors, lightColors, type Colors } from './colors';
+import { darkColors, lightColors, type Colors } from '@/theme/colors';
 
 interface ThemeContextValue {
   colors: Colors;

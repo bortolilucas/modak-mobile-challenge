@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { ProductListScreen } from './ui/screens/ProductList';
+import { ProductListScreen } from '@/features/products/presentation/screens/ProductList';
 
 export const PRODUCTS_ROUTES = {
   ProductsList: 'Products.ProductsList',

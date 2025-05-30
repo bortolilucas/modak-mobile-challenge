@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@/core/ui/theme/context';
+import { ThemeProvider } from '@/theme/context';
 import { Navigator } from '@/navigation/Navigator';
 
 export default function App() {

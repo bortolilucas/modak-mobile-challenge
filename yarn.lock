@@ -7664,10 +7664,12 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.0.0"
     react-native: "npm:0.79.2"
+    react-native-config: "npm:^1.5.5"
     react-native-safe-area-context: "npm:^5.4.1"
     react-native-screens: "npm:^4.11.1"
     react-test-renderer: "npm:19.0.0"
     typescript: "npm:5.0.4"
+    zod: "npm:^3.25.42"
   languageName: unknown
   linkType: soft
 
@@ -7825,6 +7827,18 @@ __metadata:
   version: 19.1.0
   resolution: "react-is@npm:19.1.0"
   checksum: 10c0/b6c6cadd172d5d39f66d493700d137a5545c294a62ce0f8ec793d59794c97d2bed6bad227626f16bd0e90004ed7fdc8ed662a004e6edcf5d2b7ecb6e3040ea6b
+  languageName: node
+  linkType: hard
+
+"react-native-config@npm:^1.5.5":
+  version: 1.5.5
+  resolution: "react-native-config@npm:1.5.5"
+  peerDependencies:
+    react-native-windows: ">=0.61"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 10c0/8fa0b1202b9a7daee4c41ef95baa7adc70fdcaeb4d604dace9ff0c47963d96879b66720cc4e77557a99dacd71453ac99c4607bc2a24ea37e274c4d6d39dab18e
   languageName: node
   linkType: hard
 
@@ -9515,5 +9529,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.25.42":
+  version: 3.25.42
+  resolution: "zod@npm:3.25.42"
+  checksum: 10c0/daa04d3bd5d87318790def440c074a154e29a5c900aefc6605c078df5878cdc9b465091c1ad117478e1f907242b8983d69bf2c11fcf354772b18d7103b94383a
   languageName: node
   linkType: hard

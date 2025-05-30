@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Animated, useAnimatedValue, type ViewProps } from 'react-native';
 
-import { useTheme } from '@/core/ui/theme/context';
+import { useTheme } from '@/theme/context';
 
 const defaultOptions = {
   toValue: 0,
