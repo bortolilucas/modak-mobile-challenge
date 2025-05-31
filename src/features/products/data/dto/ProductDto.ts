@@ -1,10 +1,10 @@
-export interface ProductDimensionsResponse {
+export interface ProductDimensionsDto {
   width: number;
   height: number;
   depth: number;
 }
 
-export interface ProductReviewsResponse {
+export interface ProductReviewsDto {
   rating: number;
   comment: string;
   date: string;
@@ -12,14 +12,14 @@ export interface ProductReviewsResponse {
   reviewerEmail: string;
 }
 
-export interface ProductMetaResponse {
+export interface ProductMetaDto {
   createdAt: string;
   updatedAt: string;
   barcode: string;
   qrCode: string;
 }
 
-export interface ProductResponse {
+export interface ProductDto {
   id: number;
   title: string;
   description: string;
@@ -32,14 +32,14 @@ export interface ProductResponse {
   brand: string;
   sku: string;
   weight: number;
-  dimensions: ProductDimensionsResponse;
+  dimensions: ProductDimensionsDto;
   warrantyInformation: string;
   shippingInformation: string;
   availabilityStatus: string;
-  reviews: ProductReviewsResponse[];
+  reviews: ProductReviewsDto[];
   returnPolicy: string;
   minimumOrderQuantity: number;
-  meta: ProductMetaResponse;
+  meta: ProductMetaDto;
   thumbnail: string;
   images: string[];
 }

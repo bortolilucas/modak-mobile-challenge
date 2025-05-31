@@ -6,6 +6,6 @@ export class HttpResponseError extends Error {
 
 export class HttpGenericError extends Error {
   constructor(public cause: unknown) {
-    super(`Request failed to complete. Error: ${cause}`);
+    super(`Request failed to complete. Cause: ${cause}`);
   }
 }

@@ -1,5 +1,8 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset'],
+  presets: [
+    'module:@react-native/babel-preset',
+    ['@babel/preset-typescript', { onlyRemoveTypeImports: true }],
+  ],
   plugins: [
     [
       'module-resolver',
@@ -20,5 +23,7 @@ module.exports = {
         },
       },
     ],
+    'react-obsidian/dist/transformers/babel-plugin-obsidian',
+    ['@babel/plugin-proposal-decorators', { version: 'legacy' }],
   ],
 };
