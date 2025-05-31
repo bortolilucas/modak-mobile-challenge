@@ -1,14 +1,16 @@
-export interface Colors {
-  primary: string;
-  background: string;
+export enum ThemeColor {
+  primary = 'primary',
+  background = 'background',
 }
 
-export const lightColors: Colors = {
+export type ThemeColors = Record<ThemeColor, string>;
+
+export const lightColors: ThemeColors = {
   primary: '#006a61',
   background: '#fafdfb',
 };
 
-export const darkColors: Colors = {
+export const darkColors: ThemeColors = {
   primary: '#52dbcb',
   background: '#191c1b',
 };

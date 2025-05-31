@@ -1,6 +1,7 @@
 package com.productsapp
 
 import android.os.Bundle;
+import androidx.activity.enableEdgeToEdge
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
@@ -9,6 +10,7 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
+    enableEdgeToEdge() // Required to enable in Android <= 14
     super.onCreate(null) // Required by react-native-screens
   }
 

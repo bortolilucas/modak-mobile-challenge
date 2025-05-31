@@ -1,6 +1,6 @@
-import { ThemeProvider } from '@/theme/context';
-import { Navigator } from '@/navigation/Navigator';
 import { QueryProvider } from '@/config/query';
+import { Navigator } from '@/navigation';
+import { ThemeProvider } from '@/theme/context';
 
 export default function App() {
   return (
