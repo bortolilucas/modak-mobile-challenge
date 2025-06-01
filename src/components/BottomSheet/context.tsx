@@ -1,3 +1,4 @@
+import type { MessageContentProps } from '@/components/BottomSheet/MessageContent';
 import { createContext } from 'react';
 import type { ModalizeProps } from 'react-native-modalize';
 
@@ -18,10 +19,12 @@ export type BottomSheetShowOptions =
 
 export type BottomSheetContextValue = {
   show: (options: BottomSheetShowOptions) => void;
+  showMessage: (options: MessageContentProps) => void;
   hide: () => void;
 };
 
 export const BottomSheetContext = createContext<BottomSheetContextValue>({
   show: () => undefined,
+  showMessage: () => undefined,
   hide: () => undefined,
 });

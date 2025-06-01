@@ -9,11 +9,11 @@ export default function App() {
   return (
     <GestureHandlerRootView>
       <SafeAreaProvider>
-        <QueryProvider>
-          <BottomSheetProvider>
+        <BottomSheetProvider>
+          <QueryProvider>
             <Navigator />
-          </BottomSheetProvider>
-        </QueryProvider>
+          </QueryProvider>
+        </BottomSheetProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

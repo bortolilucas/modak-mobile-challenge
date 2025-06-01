@@ -9,6 +9,7 @@ import {
   type BottomSheetContextValue,
   type BottomSheetShowOptions,
 } from '@/components/BottomSheet/context';
+import { MessageContent } from '@/components/BottomSheet/MessageContent';
 
 export const BottomSheetProvider: React.FC<React.PropsWithChildren> = ({
   children,
@@ -21,6 +22,8 @@ export const BottomSheetProvider: React.FC<React.PropsWithChildren> = ({
   const value = useMemo<BottomSheetContextValue>(
     () => ({
       show: setCurrProps,
+      showMessage: options =>
+        setCurrProps({ content: <MessageContent {...options} /> }),
       hide: () => bottomSheetRef.current?.close(),
     }),
     [],

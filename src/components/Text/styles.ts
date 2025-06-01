@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   [TextSize.BODY]: {
     fontSize: scale(14),
-    lineHeight: scale(18),
+    lineHeight: scale(20),
     fontWeight: '500',
   },
   [TextSize.CAPTION]: {
