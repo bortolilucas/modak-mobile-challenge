@@ -2,23 +2,15 @@ import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 
 import { TextSize } from '@/components/Text/styles';
 import styles from '@/components/Text/styles';
-import type { ThemeColor } from '@/theme/colors';
-import { useTheme } from '@/theme/context';
+import { Colors } from '@/theme/colors';
 
-interface Props extends RNTextProps {
+type Props = RNTextProps & {
   size: TextSize;
-  color: ThemeColor;
-}
+  color: Colors;
+};
 
 export function Text({ size, color, style, ...props }: Props) {
-  const { colors } = useTheme();
-
-  return (
-    <RNText
-      {...props}
-      style={[styles[size], { color: colors[color] }, style]}
-    />
-  );
+  return <RNText {...props} style={[styles[size], { color }, style]} />;
 }
 
 export { TextSize };

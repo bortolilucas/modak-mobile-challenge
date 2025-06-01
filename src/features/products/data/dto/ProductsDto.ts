@@ -43,3 +43,10 @@ export interface ProductDto {
   thumbnail: string;
   images: string[];
 }
+
+export interface ProductListDto {
+  products: ProductDto[];
+  total: number;
+  skip: number;
+  limit: number;
+}

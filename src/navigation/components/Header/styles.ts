@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: scale(20),
-    paddingVertical: verticalScale(10),
+    paddingBottom: verticalScale(10),
   },
 });
 

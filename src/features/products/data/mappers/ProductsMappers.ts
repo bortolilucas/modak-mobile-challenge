@@ -1,7 +1,24 @@
-import type { ProductDto } from '@/features/products/data/dto/ProductDto';
-import type { Product } from '@/features/products/domain/models/Product';
+import type { ProductDto } from '@/features/products/data/dto/ProductsDto';
+import type { ProductParamsDto } from '@/features/products/data/dto/ProductsParamsDto';
+import {
+  Product,
+  type ProductFilters,
+} from '@/features/products/domain/models/Product';
 
-export const dtoToDomain = (product: ProductDto): Product => ({
-  id: product.id,
-  title: product.title,
-});
+export const dtoToProduct = (product: ProductDto): Product =>
+  new Product(
+    product.id,
+    product.title,
+    product.thumbnail,
+    product.category,
+    product.price,
+    product.rating,
+  );
+
+export const productFiltersToDto = (
+  filters: ProductFilters,
+): ProductParamsDto => {
+  const [sortBy, order] = filters.sortBy.split('_');
+
+  return { sortBy, order };
+};

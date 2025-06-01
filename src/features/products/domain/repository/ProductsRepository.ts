@@ -1,5 +1,10 @@
-import type { Product } from '@/features/products/domain/models/Product';
+import type { ProductCategory } from '@/features/products/domain/models/Category';
+import type {
+  Product,
+  ProductFilters,
+} from '@/features/products/domain/models/Product';
 
 export interface ProductsRepository {
-  getProductList(): Promise<Product[]>;
+  getProductList(filters: ProductFilters): Promise<Product[]>;
+  getProductCategoryList(): Promise<ProductCategory[]>;
 }

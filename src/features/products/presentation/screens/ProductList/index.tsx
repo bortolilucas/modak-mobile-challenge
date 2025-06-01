@@ -1,8 +1,32 @@
-import useProductListModel from './model';
+import useProductListViewModel from './model';
 import { ProductListView } from './view';
 
 export function ProductListScreen() {
-  const { data, isLoading } = useProductListModel();
+  const {
+    products,
+    categoriesOptions,
+    sortByOptions,
+    filters,
+    isCategoriesLoading,
+    isProductsLoading,
+    isProductsRefreshing,
+    onChangeFilters,
+    onProductPress,
+    onRefresh,
+  } = useProductListViewModel();
 
-  return <ProductListView isLoading={isLoading} />;
+  return (
+    <ProductListView
+      products={products}
+      categoriesOptions={categoriesOptions}
+      sortByOptions={sortByOptions}
+      filters={filters}
+      isProductsLoading={isProductsLoading}
+      isProductsRefreshing={isProductsRefreshing}
+      isCategoriesLoading={isCategoriesLoading}
+      onChangeFilters={onChangeFilters}
+      onPressProduct={onProductPress}
+      onRefresh={onRefresh}
+    />
+  );
 }

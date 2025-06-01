@@ -7,6 +7,7 @@ import type {
   HttpClientConfig,
   HttpMethod,
 } from '@/infra/httpClient/HttpClient';
+import { toQueryString } from '@/utils/querystring';
 
 export class FetchHttpClient implements HttpClient {
   get = this.createRequest('GET');
@@ -21,8 +22,7 @@ export class FetchHttpClient implements HttpClient {
       { body, headers, params }: HttpClientConfig = {},
     ) => {
       try {
-        const querystring = params ? `?${new URLSearchParams(params)}` : '';
-        const url = `${hostname}${endpoint}${querystring}`;
+        const url = `${hostname}${endpoint}${toQueryString(params)}`;
 
         const requestBody = body && JSON.stringify(body);
 

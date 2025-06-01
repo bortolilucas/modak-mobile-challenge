@@ -1,38 +1,35 @@
-import React, { useEffect } from 'react';
-import { Animated, useAnimatedValue, type ViewProps } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
 
-import { useTheme } from '@/theme/context';
+import styles from '@/components/Skeleton/styles';
 
-const defaultOptions = {
-  toValue: 0,
-  duration: 500,
-  useNativeDriver: true,
-} satisfies Animated.TimingAnimationConfig;
-
-export const Skeleton: React.FC<ViewProps> = ({ style, ...props }) => {
-  const { colors } = useTheme();
-  const animatedValue = useAnimatedValue(defaultOptions.toValue);
+export const Skeleton = ({
+  style,
+  ...rest
+}: React.ComponentPropsWithRef<typeof Animated.View>) => {
+  const animatedValue = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    const animation = Animated.loop(
+    Animated.loop(
       Animated.sequence([
-        Animated.timing(animatedValue, { ...defaultOptions, toValue: 1 }),
-        Animated.timing(animatedValue, { ...defaultOptions, toValue: 0.3 }),
+        Animated.timing(animatedValue, {
+          toValue: 0.3,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedValue, {
+          toValue: 1,
+          duration: 1200,
+          useNativeDriver: true,
+        }),
       ]),
-    );
-
-    animation.start();
-
-    return () => animation.stop();
+    ).start();
   }, [animatedValue]);
 
   return (
     <Animated.View
-      style={[
-        { backgroundColor: colors.background, opacity: animatedValue },
-        style,
-      ]}
-      {...props}
+      {...rest}
+      style={[style, styles.container, { opacity: animatedValue }]}
     />
   );
 };

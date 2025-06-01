@@ -1,8 +1,10 @@
-export interface HttpClientConfig {
+import type { QueryStringParams } from '@/utils/querystring';
+
+export type HttpClientConfig = {
   body?: BodyInit_;
   headers?: HeadersInit_;
-  params?: Record<string, string>;
-}
+  params?: QueryStringParams;
+};
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
