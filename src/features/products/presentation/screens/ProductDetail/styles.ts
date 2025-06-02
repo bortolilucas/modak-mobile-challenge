@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     gap: scale(12),
     marginTop: verticalScale(10),
   },
+  reminderButton: {
+    marginTop: verticalScale(25),
+  },
 });
 
 export default styles;

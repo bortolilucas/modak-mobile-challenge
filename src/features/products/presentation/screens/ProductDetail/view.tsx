@@ -2,7 +2,7 @@ import { Image, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DimensionsIcon, IconSize, StarIcon, StockIcon } from '@/assets/icons';
-import { Text, TextSize } from '@/components';
+import { Button, Text, TextSize } from '@/components';
 import type { Product } from '@/features/products/domain/models/Product';
 import { ProductCategoryChip } from '@/features/products/presentation/components/ProductCategoryChip';
 import { ProductInfoCard } from '@/features/products/presentation/components/ProductInfoCard';
@@ -12,9 +12,15 @@ import { plural } from '@/utils/strings';
 
 type Props = {
   product: Product;
+  shouldShowReminderButton: boolean;
+  onReminderPress: () => void;
 };
 
-export function ProductDetailView({ product }: Props) {
+export function ProductDetailView({
+  product,
+  shouldShowReminderButton,
+  onReminderPress,
+}: Props) {
   return (
     <ScrollView>
       <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -65,6 +71,12 @@ export function ProductDetailView({ product }: Props) {
             value={product.formattedDimensions}
           />
         </View>
+
+        {shouldShowReminderButton && (
+          <Button style={styles.reminderButton} onPress={onReminderPress}>
+            Add purchase reminder
+          </Button>
+        )}
       </SafeAreaView>
     </ScrollView>
   );
