@@ -17,10 +17,10 @@ Challenge for Mobile Engineer role at Modak
 ## 🎨 Screens
 
 <p>
-<img src="./.github/home.png" width="300" />
-<img src="./.github/detail.png" width="300" />
-<img src="./.github/sort-by.png" width="300" />
-<img src="./.github/filter-category.png" width="300" />
+<img src="./.github/home.png" width="200" />
+<img src="./.github/detail.png" width="200" />
+<img src="./.github/sort-by.png" width="200" />
+<img src="./.github/filter-category.png" width="200" />
 </p>
 
 ---

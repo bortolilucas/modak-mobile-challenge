@@ -15,7 +15,6 @@ type Props = {
 };
 
 export function ProductDetailView({ product }: Props) {
-  console.log(product);
   return (
     <ScrollView>
       <SafeAreaView edges={['bottom']} style={styles.container}>
