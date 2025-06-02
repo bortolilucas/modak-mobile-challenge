@@ -3,16 +3,13 @@ import {
   type NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 
+import { ProductDetailScreen } from '@/features/products/presentation/screens/ProductDetail';
 import { ProductListScreen } from '@/features/products/presentation/screens/ProductList';
+import {
+  PRODUCTS_ROUTES,
+  type ProductsParamList,
+} from '@/features/products/routes';
 import { Header } from '@/navigation/components/Header';
-
-export const PRODUCTS_ROUTES = {
-  ProductsList: 'Products.ProductsList',
-} as const;
-
-export type ProductsParamList = {
-  [PRODUCTS_ROUTES.ProductsList]: undefined;
-};
 
 const Stack = createNativeStackNavigator<ProductsParamList>();
 
@@ -24,8 +21,14 @@ export function ProductsStack() {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
-        name={PRODUCTS_ROUTES.ProductsList}
+        name={PRODUCTS_ROUTES.ProductList}
         component={ProductListScreen}
+        options={{ title: 'ProductsApp' }}
+      />
+      <Stack.Screen
+        name={PRODUCTS_ROUTES.ProductDetail}
+        component={ProductDetailScreen}
+        options={{ headerBackTitle: 'Back' }}
       />
     </Stack.Navigator>
   );

@@ -1,10 +1,11 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 
+import { IconSize, StarIcon } from '@/assets/icons';
 import { Skeleton, Text, TextSize } from '@/components';
 import type { Product } from '@/features/products/domain/models/Product';
+import { ProductCategoryChip } from '@/features/products/presentation/components/ProductCategoryChip';
 import styles from '@/features/products/presentation/components/ProductListItem/styles';
 import { Colors } from '@/theme/colors';
-import { IconSize, StarIcon } from '@/assets/icons';
 
 type Props = {
   product: Product;
@@ -22,14 +23,10 @@ export function ProductListItem({ product, isLoading, onPress }: Props) {
       <View style={styles.containerThumb}>
         <Image source={{ uri: product.thumbnail }} style={styles.thumb} />
 
-        <View style={styles.categoryChip}>
-          <Text
-            size={TextSize.CAPTION}
-            color={Colors.SURFACE}
-            style={styles.categoryText}>
-            {product.category}
-          </Text>
-        </View>
+        <ProductCategoryChip
+          category={product.category}
+          style={styles.categoryChip}
+        />
       </View>
 
       <View style={styles.containerInfo}>

@@ -33,14 +33,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.PRIMARY,
-    justifyContent: 'center',
-    paddingVertical: verticalScale(1.5),
-    paddingHorizontal: scale(8),
-    borderTopLeftRadius: scale(4),
-  },
-  categoryText: {
-    textTransform: 'capitalize',
   },
   containerInfo: {
     paddingHorizontal: scale(10),

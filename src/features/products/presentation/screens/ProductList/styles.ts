@@ -1,5 +1,6 @@
-import { scale, verticalScale } from '@/theme/scaling';
 import { StyleSheet } from 'react-native';
+
+import { scale, verticalScale } from '@/theme/scaling';
 
 const styles = StyleSheet.create({
   listContent: {

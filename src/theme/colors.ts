@@ -2,7 +2,9 @@ import { DefaultTheme, type Theme } from '@react-navigation/native';
 
 export enum Colors {
   PRIMARY = '#006a61',
+  ACCENT = '#dfedea',
   BACKGROUND = '#fafdfb',
+  SKELETON = '#e9e9e9',
   SURFACE = '#fff',
   TEXT = '#191c1b',
   BORDER = '#bec9c6',

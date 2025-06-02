@@ -1,5 +1,6 @@
-import type { SvgIconProps } from '@/assets/icons/types';
 import Svg, { Path } from 'react-native-svg';
+
+import type { SvgIconProps } from '@/assets/icons/types';
 
 export function StarIcon({ size, fill, ...rest }: SvgIconProps) {
   return (

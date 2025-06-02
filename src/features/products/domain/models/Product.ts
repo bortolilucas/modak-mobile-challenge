@@ -1,5 +1,11 @@
 import { formatCurrency } from '@/utils/currency';
 
+export interface ProductDimensions {
+  width: number;
+  height: number;
+  depth: number;
+}
+
 export class Product {
   constructor(
     public id: number,
@@ -8,10 +14,19 @@ export class Product {
     public category: string,
     public price: number,
     public rating: number,
+    public brand: string,
+    public description: string,
+    public stock: number,
+    public dimensions: ProductDimensions,
   ) {}
 
   get formattedPrice() {
     return formatCurrency(this.price);
+  }
+
+  get formattedDimensions() {
+    const { width, depth, height } = this.dimensions;
+    return `${width} × ${depth} × ${height}`;
   }
 }
 

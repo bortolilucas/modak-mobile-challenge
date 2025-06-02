@@ -9,8 +9,12 @@ import {
   ProductSortBy,
   type ProductFilters,
 } from '@/features/products/domain/models/Product';
+import type { ProductsScreenProps } from '@/features/products/routes';
+import { Routes } from '@/navigation/routes';
 
-type Props = DependenciesOf<ProductsDiGraph, 'repository'>;
+type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
+  navigation: ProductsScreenProps<'Products.ProductList'>['navigation'];
+};
 
 const sortByOptions: SelectItem[] = [
   { label: 'Sort by', value: '' },
@@ -20,7 +24,7 @@ const sortByOptions: SelectItem[] = [
   { label: 'Highest Rating', value: ProductSortBy.RATING_DESC },
 ];
 
-export function useProductListViewModel({ repository }: Props) {
+export function useProductListViewModel({ navigation, repository }: Props) {
   const [filters, setFilters] = useState<ProductFilters>({
     category: '',
     sortBy: '',
@@ -60,7 +64,9 @@ export function useProductListViewModel({ repository }: Props) {
         [name]: value,
       }));
 
-  const onProductPress = (product: Product) => {};
+  const onProductPress = (product: Product) => {
+    navigation.navigate(Routes.Products.ProductDetail, { product });
+  };
 
   const onRefresh = () =>
     startRefreshingTransition(async () => {

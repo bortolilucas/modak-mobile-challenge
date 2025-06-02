@@ -1,7 +1,11 @@
-import type { ProductDto } from '@/features/products/data/dto/ProductsDto';
+import type {
+  ProductDimensionsDto,
+  ProductDto,
+} from '@/features/products/data/dto/ProductsDto';
 import type { ProductParamsDto } from '@/features/products/data/dto/ProductsParamsDto';
 import {
   Product,
+  type ProductDimensions,
   type ProductFilters,
 } from '@/features/products/domain/models/Product';
 
@@ -13,7 +17,19 @@ export const dtoToProduct = (product: ProductDto): Product =>
     product.category,
     product.price,
     product.rating,
+    product.brand,
+    product.description,
+    product.stock,
+    dtoToProductDimensions(product.dimensions),
   );
+
+export const dtoToProductDimensions = (
+  dimensions: ProductDimensionsDto,
+): ProductDimensions => ({
+  width: dimensions.width,
+  height: dimensions.height,
+  depth: dimensions.depth,
+});
 
 export const productFiltersToDto = (
   filters: ProductFilters,

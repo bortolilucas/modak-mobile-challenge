@@ -1,6 +1,7 @@
-import type { MessageContentProps } from '@/components/BottomSheet/MessageContent';
 import { createContext } from 'react';
 import type { ModalizeProps } from 'react-native-modalize';
+
+import type { MessageContentProps } from '@/components/BottomSheet/MessageContent';
 
 type BottomSheetContentModeProps = {
   content: React.ReactNode;

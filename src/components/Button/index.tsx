@@ -1,7 +1,8 @@
+import { TouchableOpacity, type TouchableOpacityProps } from 'react-native';
+
 import styles from '@/components/Button/styles';
 import { Text, TextSize } from '@/components/Text';
 import { Colors } from '@/theme/colors';
-import { TouchableOpacity, type TouchableOpacityProps } from 'react-native';
 
 type Props = Pick<TouchableOpacityProps, 'onPress' | 'children' | 'style'>;
 

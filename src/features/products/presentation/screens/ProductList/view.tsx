@@ -26,7 +26,12 @@ type Props = {
 };
 
 const loadingItems = Array.from({ length: 6 }).map(
-  (_, index) => new Product(index, '', '', '', 0, 0),
+  (_, index) =>
+    new Product(index, '', '', '', 0, 0, '', '', 0, {
+      width: 0,
+      height: 0,
+      depth: 0,
+    }),
 );
 
 export function ProductListView({
@@ -57,7 +62,7 @@ export function ProductListView({
             onChange={onChangeFilters('category')}
           />
           <Select
-            title="Sort by"
+            title="Sort options"
             value={filters.sortBy}
             options={sortByOptions}
             onChange={onChangeFilters('sortBy')}

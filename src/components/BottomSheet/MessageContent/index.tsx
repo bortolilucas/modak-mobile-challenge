@@ -1,10 +1,10 @@
 import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Button, Text, TextSize } from '@/components';
 import { useBottomSheet } from '@/components/BottomSheet';
 import styles from '@/components/BottomSheet/MessageContent/styles';
 import { Colors } from '@/theme/colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type MessageContentProps = {
   title: string;
