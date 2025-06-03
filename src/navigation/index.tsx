@@ -4,14 +4,16 @@ import {
 } from '@react-navigation/native';
 
 import { ProductsStack } from '@/features/products/navigation';
-import { navigationTheme } from '@/theme/colors';
 import type { ProductsParamList } from '@/features/products/routes';
+import { Routes } from '@/navigation/routes';
+import { navigationTheme } from '@/theme/colors';
 
 const linking: LinkingOptions<ProductsParamList> = {
   prefixes: ['productsApp://'],
   config: {
+    initialRouteName: Routes.Products.ProductList,
     screens: {
-      'Products.ProductDetail': 'product/:id',
+      [Routes.Products.ProductDetail]: 'product/:id',
     },
   },
 };
