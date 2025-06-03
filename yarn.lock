@@ -7862,6 +7862,7 @@ __metadata:
     react-native-modalize: "npm:^2.1.1"
     react-native-safe-area-context: "npm:^5.4.1"
     react-native-screens: "npm:^4.11.1"
+    react-native-send-intent: "npm:^1.3.0"
     react-native-svg: "npm:^15.12.0"
     react-obsidian: "npm:^2.23.0"
     react-test-renderer: "npm:19.0.0"
@@ -8095,6 +8096,15 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/88a33ba419bd571cc318e80d25eb172f5829677f2dd80dcb69cbeaa6a35ba26214e0e82af87baa375182afe41a276e8ef1a9d13b826f662f3a389982492c2879
+  languageName: node
+  linkType: hard
+
+"react-native-send-intent@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "react-native-send-intent@npm:1.3.0"
+  peerDependencies:
+    react-native: "*"
+  checksum: 10c0/a9ca83176b826f8725b35b3edaa8d44a027313930c72a34f6ce5017bfb6dee1987ec394ef9a84d695fa681eb7daeba4a8f8fd065710e593d333615d4b1927d6a
   languageName: node
   linkType: hard
 

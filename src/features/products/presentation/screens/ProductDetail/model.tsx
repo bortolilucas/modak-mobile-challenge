@@ -4,29 +4,20 @@ import { injectHook, type DependenciesOf } from 'react-obsidian';
 
 import { useBottomSheet } from '@/components/BottomSheet';
 import { ProductsDiGraph } from '@/features/products/di';
-import type { Product } from '@/features/products/domain/models/Product';
 import { getErrorMessage } from '@/infra/httpClient/fetch/errors';
 import type { ReminderEventData } from '@/specs/NativeCalendarModule';
 import NativeCalendarModule from '@/specs/NativeCalendarModule';
 
 type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
-  productId?: number;
-  initialProduct?: Product;
+  productId: number;
 };
 
-function useProductDetailViewModel({
-  repository,
-  productId,
-  initialProduct,
-}: Props) {
+function useProductDetailViewModel({ repository, productId }: Props) {
   const bottomSheet = useBottomSheet();
 
   const { data: product, isLoading } = useQuery({
-    initialData: initialProduct,
-    enabled: !!productId,
-    queryKey: ['productDetail', productId, initialProduct],
-    queryFn: () =>
-      productId ? repository.getProductDetail(productId) : initialProduct,
+    queryKey: ['productDetail', productId],
+    queryFn: () => repository.getProductDetail(productId),
   });
 
   const onReminderPress = async () => {

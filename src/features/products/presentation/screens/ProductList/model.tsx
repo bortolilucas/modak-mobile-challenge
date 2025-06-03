@@ -9,12 +9,10 @@ import {
   ProductSortBy,
   type ProductFilters,
 } from '@/features/products/domain/models/Product';
-import type { ProductsScreenProps } from '@/features/products/routes';
-import { Routes } from '@/navigation/routes';
+import { DeepLinkRoutes } from '@/navigation/routes';
+import { navigateWithDeepLink } from '@/config/deeplink';
 
-type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
-  navigation: ProductsScreenProps<'Products.ProductList'>['navigation'];
-};
+type Props = DependenciesOf<ProductsDiGraph, 'repository'>;
 
 const sortByOptions: SelectItem[] = [
   { label: 'Sort by', value: '' },
@@ -24,7 +22,7 @@ const sortByOptions: SelectItem[] = [
   { label: 'Highest Rating', value: ProductSortBy.RATING_DESC },
 ];
 
-function useProductListViewModel({ navigation, repository }: Props) {
+function useProductListViewModel({ repository }: Props) {
   const [filters, setFilters] = useState<ProductFilters>({
     category: '',
     sortBy: '',
@@ -64,8 +62,8 @@ function useProductListViewModel({ navigation, repository }: Props) {
         [name]: value,
       }));
 
-  const onProductPress = (product: Product) => {
-    navigation.navigate(Routes.Products.ProductDetail, { product });
+  const onProductPress = async (product: Product) => {
+    navigateWithDeepLink(DeepLinkRoutes.productDetail(product.id));
   };
 
   const onRefresh = () =>
