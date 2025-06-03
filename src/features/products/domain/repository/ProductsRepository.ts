@@ -6,5 +6,6 @@ import type {
 
 export interface ProductsRepository {
   getProductList(filters: ProductFilters): Promise<Product[]>;
+  getProductDetail(productId: number): Promise<Product>;
   getProductCategoryList(): Promise<ProductCategory[]>;
 }

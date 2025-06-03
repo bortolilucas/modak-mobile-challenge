@@ -1,4 +1,4 @@
-import { Image, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { DimensionsIcon, IconSize, StarIcon, StockIcon } from '@/assets/icons';
@@ -11,16 +11,30 @@ import { Colors } from '@/theme/colors';
 import { plural } from '@/utils/strings';
 
 type Props = {
-  product: Product;
+  product: Product | undefined;
+  isLoading: boolean;
   shouldShowReminderButton: boolean;
   onReminderPress: () => void;
 };
 
 export function ProductDetailView({
   product,
+  isLoading,
   shouldShowReminderButton,
   onReminderPress,
 }: Props) {
+  if (isLoading) {
+    return (
+      <View style={styles.loadingView}>
+        <ActivityIndicator size="large" color={Colors.PRIMARY} />
+      </View>
+    );
+  }
+
+  if (!product) {
+    return null;
+  }
+
   return (
     <ScrollView>
       <SafeAreaView edges={['bottom']} style={styles.container}>

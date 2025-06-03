@@ -1,6 +1,9 @@
 import { Env } from '@/config/env';
 import type { ProductCategoryDto } from '@/features/products/data/dto/CategoriesDto';
-import type { ProductListDto } from '@/features/products/data/dto/ProductsDto';
+import type {
+  ProductDto,
+  ProductListDto,
+} from '@/features/products/data/dto/ProductsDto';
 import type { ProductParamsDto } from '@/features/products/data/dto/ProductsParamsDto';
 import type { HttpClient } from '@/infra/httpClient/HttpClient';
 
@@ -10,6 +13,7 @@ export interface ProductsApi {
     categorySlug: string,
     params: ProductParamsDto,
   ): Promise<ProductListDto>;
+  fetchProductDetail(productId: number): Promise<ProductDto>;
   fetchProductsCategories(): Promise<ProductCategoryDto[]>;
 }
 
@@ -37,6 +41,15 @@ export class ProductsApiImpl implements ProductsApi {
     );
 
     return productsList;
+  }
+
+  async fetchProductDetail(productId: number): Promise<ProductDto> {
+    const product = await this.httpClient.get<ProductDto>(
+      Env.DUMMY_API_URL,
+      `/products/${productId}`,
+    );
+
+    return product;
   }
 
   async fetchProductsCategories(): Promise<ProductCategoryDto[]> {

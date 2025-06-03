@@ -23,6 +23,12 @@ export class ProductsRepositoryImpl implements ProductsRepository {
     return response.products.map(dtoToProduct);
   }
 
+  async getProductDetail(productId: number): Promise<Product> {
+    const response = await this.api.fetchProductDetail(productId);
+
+    return dtoToProduct(response);
+  }
+
   async getProductCategoryList(): Promise<ProductCategory[]> {
     const response = await this.api.fetchProductsCategories();
 

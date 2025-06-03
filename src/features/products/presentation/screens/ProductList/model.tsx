@@ -24,7 +24,7 @@ const sortByOptions: SelectItem[] = [
   { label: 'Highest Rating', value: ProductSortBy.RATING_DESC },
 ];
 
-export function useProductListViewModel({ navigation, repository }: Props) {
+function useProductListViewModel({ navigation, repository }: Props) {
   const [filters, setFilters] = useState<ProductFilters>({
     category: '',
     sortBy: '',

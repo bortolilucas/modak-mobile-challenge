@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
   reminderButton: {
     marginTop: verticalScale(25),
   },
+  loadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

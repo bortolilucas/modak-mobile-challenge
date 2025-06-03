@@ -7,9 +7,11 @@ export const PRODUCTS_ROUTES = {
   ProductDetail: 'Products.ProductDetail',
 } as const;
 
+export type ProductDetailParams = { id?: number; product?: Product };
+
 export type ProductsParamList = {
   [PRODUCTS_ROUTES.ProductList]: undefined;
-  [PRODUCTS_ROUTES.ProductDetail]: { product: Product };
+  [PRODUCTS_ROUTES.ProductDetail]: ProductDetailParams;
 };
 
 export type ProductsScreenProps<T extends keyof ProductsParamList> =
