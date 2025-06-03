@@ -6,6 +6,7 @@ import type {
   HttpClient,
   HttpClientConfig,
   HttpMethod,
+  HttpMethodFunction,
 } from '@/infra/httpClient/HttpClient';
 import { toQueryString } from '@/utils/querystring';
 
@@ -15,7 +16,7 @@ export class FetchHttpClient implements HttpClient {
   put = this.createRequest('PUT');
   delete = this.createRequest('DELETE');
 
-  createRequest(method: HttpMethod) {
+  createRequest(method: HttpMethod): HttpMethodFunction {
     return async <T>(
       hostname: string,
       endpoint: string,

@@ -8,7 +8,7 @@ export type HttpClientConfig = {
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-type HttpMethodFunction = <T>(
+export type HttpMethodFunction = <T>(
   hostname: string,
   url: string,
   config?: HttpClientConfig,
