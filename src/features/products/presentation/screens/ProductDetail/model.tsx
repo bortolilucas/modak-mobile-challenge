@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { Platform } from 'react-native';
 import { injectHook, type DependenciesOf } from 'react-obsidian';
 
@@ -12,7 +13,7 @@ type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
   productId: number;
 };
 
-function useProductDetailViewModel({ repository, productId }: Props) {
+export function useProductDetailViewModel({ repository, productId }: Props) {
   const bottomSheet = useBottomSheet();
 
   const { data: product, isLoading } = useQuery({
@@ -22,14 +23,16 @@ function useProductDetailViewModel({ repository, productId }: Props) {
 
   const onReminderPress = async () => {
     try {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      tomorrow.setHours(9, 0, 0, 0);
+      const dateMs = dayjs()
+        .startOf('day')
+        .add(1, 'day')
+        .set('hour', 9)
+        .valueOf();
 
       const data: ReminderEventData = {
         title: `Purchase Reminder: ${product?.title}`,
         description: `Don't forget to purchase ${product?.title} from the Products App. Price: $${product?.price}`,
-        date: tomorrow.getTime(),
+        date: dateMs,
       };
 
       await NativeCalendarModule.addReminderEvent(data);

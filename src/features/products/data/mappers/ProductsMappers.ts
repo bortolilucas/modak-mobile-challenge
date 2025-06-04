@@ -9,6 +9,14 @@ import {
   type ProductFilters,
 } from '@/features/products/domain/models/Product';
 
+const dtoToProductDimensions = (
+  dimensions: ProductDimensionsDto,
+): ProductDimensions => ({
+  width: dimensions.width,
+  height: dimensions.height,
+  depth: dimensions.depth,
+});
+
 export const dtoToProduct = (product: ProductDto): Product =>
   new Product(
     product.id,
@@ -22,14 +30,6 @@ export const dtoToProduct = (product: ProductDto): Product =>
     product.stock,
     dtoToProductDimensions(product.dimensions),
   );
-
-export const dtoToProductDimensions = (
-  dimensions: ProductDimensionsDto,
-): ProductDimensions => ({
-  width: dimensions.width,
-  height: dimensions.height,
-  depth: dimensions.depth,
-});
 
 export const productFiltersToDto = (
   filters: ProductFilters,
