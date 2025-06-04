@@ -10,7 +10,7 @@ import styles from '@/features/products/presentation/screens/ProductDetail/style
 import { Colors } from '@/theme/colors';
 import { plural } from '@/utils/strings';
 
-type Props = {
+export type Props = {
   product: Product | undefined;
   isLoading: boolean;
   shouldShowReminderButton: boolean;
