@@ -11,3 +11,7 @@ jest.mock('@/components/BottomSheet', () => ({
     hide: jest.fn(),
   }),
 }));
+
+jest.mock('@/config/deeplink');
+
+jest.mock('@/utils/platform');

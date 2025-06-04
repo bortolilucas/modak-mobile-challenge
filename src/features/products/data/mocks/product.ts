@@ -71,6 +71,11 @@ export const mockProduct: Product = new Product(
 
 export const mockProductList: Product[] = [mockProduct];
 
+export const mockEmptyFilters: ProductFilters = {
+  sortBy: '',
+  category: '',
+};
+
 export const mockFilters: ProductFilters = {
   sortBy: ProductSortBy.PRICE_ASC,
   category: '',

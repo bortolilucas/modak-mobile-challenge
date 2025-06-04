@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { Platform } from 'react-native';
 import { injectHook, type DependenciesOf } from 'react-obsidian';
 
 import { useBottomSheet } from '@/components/BottomSheet';
@@ -8,6 +7,7 @@ import { ProductsDiGraph } from '@/features/products/di';
 import { getErrorMessage } from '@/infra/httpClient/fetch/errors';
 import type { ReminderEventData } from '@/specs/NativeCalendarModule';
 import NativeCalendarModule from '@/specs/NativeCalendarModule';
+import { isAndroid } from '@/utils/platform';
 
 type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
   productId: number;
@@ -47,7 +47,7 @@ export function useProductDetailViewModel({ repository, productId }: Props) {
   return {
     product,
     isLoading,
-    shouldShowReminderButton: Platform.OS === 'android',
+    shouldShowReminderButton: isAndroid(),
     onReminderPress,
   };
 }

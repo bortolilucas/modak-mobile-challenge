@@ -25,7 +25,7 @@ export function ProductListScreen() {
       isProductsRefreshing={isProductsRefreshing}
       isCategoriesLoading={isCategoriesLoading}
       onChangeFilters={onChangeFilters}
-      onPressProduct={onProductPress}
+      onProductPress={onProductPress}
       onRefresh={onRefresh}
     />
   );

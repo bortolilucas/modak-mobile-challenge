@@ -3,26 +3,18 @@ import { useMemo, useState, useTransition } from 'react';
 import { injectHook, type DependenciesOf } from 'react-obsidian';
 
 import type { SelectItem } from '@/components/Select/types';
+import { navigateWithDeepLink } from '@/config/deeplink';
 import { ProductsDiGraph } from '@/features/products/di';
 import {
   Product,
-  ProductSortBy,
   type ProductFilters,
 } from '@/features/products/domain/models/Product';
+import { sortByOptions } from '@/features/products/presentation/constants/sortByOptions';
 import { DeepLinkRoutes } from '@/navigation/routes';
-import { navigateWithDeepLink } from '@/config/deeplink';
 
 type Props = DependenciesOf<ProductsDiGraph, 'repository'>;
 
-const sortByOptions: SelectItem[] = [
-  { label: 'Sort by', value: '' },
-  { label: 'Price: Low to High', value: ProductSortBy.PRICE_ASC },
-  { label: 'Price: High to Low', value: ProductSortBy.PRICE_DESC },
-  { label: 'Lowest Rating', value: ProductSortBy.RATING_ASC },
-  { label: 'Highest Rating', value: ProductSortBy.RATING_DESC },
-];
-
-function useProductListViewModel({ repository }: Props) {
+export function useProductListViewModel({ repository }: Props) {
   const [filters, setFilters] = useState<ProductFilters>({
     category: '',
     sortBy: '',
@@ -43,16 +35,19 @@ function useProductListViewModel({ repository }: Props) {
     queryFn: () => repository.getProductCategoryList(),
   });
 
-  const categoriesOptions = useMemo<SelectItem[]>(
-    () => [
+  const categoriesOptions = useMemo<SelectItem[]>(() => {
+    if (!categories || categories.length === 0) {
+      return [];
+    }
+
+    return [
       { label: 'All categories', value: '' },
       ...(categories?.map(category => ({
         label: category.name,
         value: category.slug,
       })) ?? []),
-    ],
-    [categories],
-  );
+    ];
+  }, [categories]);
 
   const onChangeFilters =
     <T extends keyof ProductFilters>(name: T) =>

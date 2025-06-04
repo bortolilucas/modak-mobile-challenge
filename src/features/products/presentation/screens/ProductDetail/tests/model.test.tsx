@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react-native';
+import dayjs from 'dayjs';
 import { mock, type MockProxy } from 'jest-mock-extended';
 
 import { mockProduct } from '@/features/products/data/mocks/product';
@@ -6,11 +7,13 @@ import type { ProductsRepository } from '@/features/products/domain/repository/P
 import { useProductDetailViewModel } from '@/features/products/presentation/screens/ProductDetail/model';
 import NativeCalendarModule from '@/specs/NativeCalendarModule';
 import { createTestingQueryProvider } from '@/testing/query';
-import dayjs from 'dayjs';
+import { isAndroid } from '@/utils/platform';
 
 const mockNativeCalendarModule = NativeCalendarModule as jest.MockedObject<
   typeof NativeCalendarModule
 >;
+
+const mockIsAndroid = isAndroid as jest.MockedFunction<typeof isAndroid>;
 
 describe('useProductDetailViewModel', () => {
   let mockRepository: MockProxy<ProductsRepository>;
@@ -37,13 +40,33 @@ describe('useProductDetailViewModel', () => {
   });
 
   beforeEach(() => {
+    jest.clearAllMocks();
     mockRepository = mock<ProductsRepository>();
+    mockIsAndroid.mockReturnValue(false);
+    mockRepository.getProductDetail.mockResolvedValue(mockProduct);
   });
 
   describe('when mounted', () => {
-    test('should fetch product detail', async () => {
-      mockRepository.getProductDetail.mockResolvedValue(mockProduct);
+    test('should return correct initial values', () => {
+      const { result } = getHookInstance();
 
+      expect(result.current).toEqual({
+        product: undefined,
+        isLoading: true,
+        shouldShowReminderButton: false,
+        onReminderPress: expect.any(Function),
+      });
+    });
+
+    test('should shouldShowReminderButton be true if Android', () => {
+      mockIsAndroid.mockReturnValue(true);
+
+      const { result } = getHookInstance();
+
+      expect(result.current.shouldShowReminderButton).toBe(true);
+    });
+
+    test('should fetch product detail', async () => {
       const { result } = getHookInstance();
 
       await waitFor(() => {
@@ -54,7 +77,6 @@ describe('useProductDetailViewModel', () => {
 
   describe('when onReminderPress is called', () => {
     test('should call addReminderEvent with correct data', async () => {
-      mockRepository.getProductDetail.mockResolvedValue(mockProduct);
       mockNativeCalendarModule.addReminderEvent.mockResolvedValue(undefined);
 
       const { result } = getHookInstance();

@@ -10,7 +10,7 @@ import {
 import { ProductListItem } from '@/features/products/presentation/components/ProductListItem';
 import styles from '@/features/products/presentation/screens/ProductList/styles';
 
-type Props = {
+export type Props = {
   products: Product[];
   categoriesOptions: SelectItem[];
   sortByOptions: SelectItem[];
@@ -21,7 +21,7 @@ type Props = {
   onChangeFilters: <T extends keyof ProductFilters>(
     name: T,
   ) => (value: ProductFilters[T]) => void;
-  onPressProduct: (product: Product) => void;
+  onProductPress: (product: Product) => void;
   onRefresh: () => void;
 };
 
@@ -43,7 +43,7 @@ export function ProductListView({
   isProductsRefreshing,
   filters,
   onChangeFilters,
-  onPressProduct,
+  onProductPress,
   onRefresh,
 }: Props) {
   return (
@@ -75,7 +75,7 @@ export function ProductListView({
         <ProductListItem
           product={item}
           isLoading={isProductsLoading}
-          onPress={onPressProduct}
+          onPress={onProductPress}
         />
       )}
       ListFooterComponent={<SafeAreaView edges={{ bottom: 'maximum' }} />}
