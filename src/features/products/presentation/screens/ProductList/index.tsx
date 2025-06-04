@@ -1,10 +1,7 @@
 import useProductListViewModel from '@/features/products/presentation/screens/ProductList/model';
 import { ProductListView } from '@/features/products/presentation/screens/ProductList/view';
-import type { ProductsScreenProps } from '@/features/products/routes';
 
-export function ProductListScreen({
-  navigation,
-}: ProductsScreenProps<'Products.ProductList'>) {
+export function ProductListScreen() {
   const {
     products,
     categoriesOptions,
@@ -16,7 +13,7 @@ export function ProductListScreen({
     onChangeFilters,
     onProductPress,
     onRefresh,
-  } = useProductListViewModel({ navigation });
+  } = useProductListViewModel();
 
   return (
     <ProductListView
