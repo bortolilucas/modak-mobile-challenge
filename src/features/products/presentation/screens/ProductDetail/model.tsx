@@ -18,7 +18,7 @@ export function useProductDetailViewModel({ repository, productId }: Props) {
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['productDetail', productId],
-    queryFn: () => repository.getProductDetail(productId),
+    queryFn: ({ signal }) => repository.getProductDetail(productId, signal),
   });
 
   const onReminderPress = async () => {

@@ -14,23 +14,31 @@ import type { ProductsRepository } from '@/features/products/domain/repository/P
 export class ProductsRepositoryImpl implements ProductsRepository {
   constructor(private api: ProductsApi) {}
 
-  async getProductList(filters: ProductFilters): Promise<Product[]> {
+  async getProductList(
+    filters: ProductFilters,
+    signal: AbortSignal,
+  ): Promise<Product[]> {
     const params = productFiltersToDto(filters);
     const response = await (filters.category
-      ? this.api.fetchProductsByCategory(filters.category, params)
-      : this.api.fetchProducts(params));
+      ? this.api.fetchProductsByCategory(filters.category, params, signal)
+      : this.api.fetchProducts(params, signal));
 
     return response.products.map(dtoToProduct);
   }
 
-  async getProductDetail(productId: number): Promise<Product> {
-    const response = await this.api.fetchProductDetail(productId);
+  async getProductDetail(
+    productId: number,
+    signal: AbortSignal,
+  ): Promise<Product> {
+    const response = await this.api.fetchProductDetail(productId, signal);
 
     return dtoToProduct(response);
   }
 
-  async getProductCategoryList(): Promise<ProductCategory[]> {
-    const response = await this.api.fetchProductsCategories();
+  async getProductCategoryList(
+    signal: AbortSignal,
+  ): Promise<ProductCategory[]> {
+    const response = await this.api.fetchProductsCategories(signal);
 
     return response.map(dtoToProductCategory);
   }

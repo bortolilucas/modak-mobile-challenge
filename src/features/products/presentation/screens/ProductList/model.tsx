@@ -27,12 +27,12 @@ export function useProductListViewModel({ repository }: Props) {
     refetch: refetchProducts,
   } = useQuery({
     queryKey: ['productList', filters],
-    queryFn: () => repository.getProductList(filters),
+    queryFn: ({ signal }) => repository.getProductList(filters, signal),
   });
 
   const { data: categories, isLoading: isCategoriesLoading } = useQuery({
     queryKey: ['productCategoryList'],
-    queryFn: () => repository.getProductCategoryList(),
+    queryFn: ({ signal }) => repository.getProductCategoryList(signal),
   });
 
   const categoriesOptions = useMemo<SelectItem[]>(() => {

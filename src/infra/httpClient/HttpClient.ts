@@ -4,6 +4,7 @@ export type HttpClientConfig = {
   body?: Record<string, unknown>;
   headers?: HeadersInit_;
   params?: QueryStringParams;
+  signal?: AbortSignal;
 };
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';

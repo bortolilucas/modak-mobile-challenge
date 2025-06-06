@@ -5,7 +5,10 @@ import type {
 } from '@/features/products/domain/models/Product';
 
 export interface ProductsRepository {
-  getProductList(filters: ProductFilters): Promise<Product[]>;
-  getProductDetail(productId: number): Promise<Product>;
-  getProductCategoryList(): Promise<ProductCategory[]>;
+  getProductList(
+    filters: ProductFilters,
+    signal: AbortSignal,
+  ): Promise<Product[]>;
+  getProductDetail(productId: number, signal: AbortSignal): Promise<Product>;
+  getProductCategoryList(signal: AbortSignal): Promise<ProductCategory[]>;
 }

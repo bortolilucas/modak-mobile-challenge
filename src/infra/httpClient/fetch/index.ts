@@ -20,7 +20,7 @@ export class FetchHttpClient implements HttpClient {
     return async <T>(
       hostname: string,
       endpoint: string,
-      { body, headers, params }: HttpClientConfig = {},
+      { body, headers, params, signal }: HttpClientConfig = {},
     ) => {
       const url = `${hostname}${endpoint}${toQueryString(params)}`;
 
@@ -33,6 +33,7 @@ export class FetchHttpClient implements HttpClient {
         response = await fetch(url, {
           method,
           headers,
+          signal,
           body: requestBody,
         });
 

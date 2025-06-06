@@ -20,11 +20,13 @@ import type { ProductsRepository } from '@/features/products/domain/repository/P
 describe('ProductsRepositoryImpl', () => {
   let mockApi: MockProxy<ProductsApi>;
   let repository: ProductsRepository;
+  let abortController: AbortController;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockApi = mock<ProductsApi>();
     repository = new ProductsRepositoryImpl(mockApi);
+    abortController = new AbortController();
   });
 
   describe('when getProductList is called', () => {
@@ -32,11 +34,15 @@ describe('ProductsRepositoryImpl', () => {
       test('should call fetchProducts api and return list of products', async () => {
         mockApi.fetchProducts.mockResolvedValue(mockProductListDto);
 
-        const result = await repository.getProductList(mockFilters);
+        const result = await repository.getProductList(
+          mockFilters,
+          abortController.signal,
+        );
 
         expect(result).toEqual(mockProductList);
         expect(mockApi.fetchProducts).toHaveBeenCalledWith(
           mockProductParamsDto,
+          abortController.signal,
         );
       });
     });
@@ -45,12 +51,16 @@ describe('ProductsRepositoryImpl', () => {
       test('should call fetchProductsByCategory api and return list of products', async () => {
         mockApi.fetchProductsByCategory.mockResolvedValue(mockProductListDto);
 
-        const result = await repository.getProductList(mockFiltersWithCategory);
+        const result = await repository.getProductList(
+          mockFiltersWithCategory,
+          abortController.signal,
+        );
 
         expect(result).toEqual(mockProductList);
         expect(mockApi.fetchProductsByCategory).toHaveBeenCalledWith(
           mockFiltersWithCategory.category,
           mockProductParamsDto,
+          abortController.signal,
         );
       });
     });
@@ -60,11 +70,15 @@ describe('ProductsRepositoryImpl', () => {
     test('should return product', async () => {
       mockApi.fetchProductDetail.mockResolvedValue(mockProductDto);
 
-      const result = await repository.getProductDetail(mockProductDto.id);
+      const result = await repository.getProductDetail(
+        mockProductDto.id,
+        abortController.signal,
+      );
 
       expect(result).toEqual(mockProduct);
       expect(mockApi.fetchProductDetail).toHaveBeenCalledWith(
         mockProductDto.id,
+        abortController.signal,
       );
     });
   });
@@ -73,10 +87,14 @@ describe('ProductsRepositoryImpl', () => {
     test('should return categories', async () => {
       mockApi.fetchProductsCategories.mockResolvedValue(mockCategoriesDto);
 
-      const result = await repository.getProductCategoryList();
+      const result = await repository.getProductCategoryList(
+        abortController.signal,
+      );
 
       expect(result).toEqual(mockCategories);
-      expect(mockApi.fetchProductsCategories).toHaveBeenCalledWith();
+      expect(mockApi.fetchProductsCategories).toHaveBeenCalledWith(
+        abortController.signal,
+      );
     });
   });
 });

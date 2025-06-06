@@ -8,23 +8,33 @@ import type { ProductParamsDto } from '@/features/products/data/dto/ProductsPara
 import type { HttpClient } from '@/infra/httpClient/HttpClient';
 
 export interface ProductsApi {
-  fetchProducts(params: ProductParamsDto): Promise<ProductListDto>;
+  fetchProducts(
+    params: ProductParamsDto,
+    signal: AbortSignal,
+  ): Promise<ProductListDto>;
   fetchProductsByCategory(
     categorySlug: string,
     params: ProductParamsDto,
+    signal: AbortSignal,
   ): Promise<ProductListDto>;
-  fetchProductDetail(productId: number): Promise<ProductDto>;
-  fetchProductsCategories(): Promise<ProductCategoryDto[]>;
+  fetchProductDetail(
+    productId: number,
+    signal: AbortSignal,
+  ): Promise<ProductDto>;
+  fetchProductsCategories(signal: AbortSignal): Promise<ProductCategoryDto[]>;
 }
 
 export class ProductsApiImpl implements ProductsApi {
   constructor(private httpClient: HttpClient) {}
 
-  async fetchProducts(params: ProductParamsDto): Promise<ProductListDto> {
+  async fetchProducts(
+    params: ProductParamsDto,
+    signal: AbortSignal,
+  ): Promise<ProductListDto> {
     const productsList = await this.httpClient.get<ProductListDto>(
       Env.DUMMY_API_URL,
       '/products',
-      { params },
+      { params, signal },
     );
 
     return productsList;
@@ -33,29 +43,37 @@ export class ProductsApiImpl implements ProductsApi {
   async fetchProductsByCategory(
     categorySlug: string,
     params: ProductParamsDto,
+    signal: AbortSignal,
   ): Promise<ProductListDto> {
     const productsList = await this.httpClient.get<ProductListDto>(
       Env.DUMMY_API_URL,
       `/products/category/${categorySlug}`,
-      { params },
+      { params, signal },
     );
 
     return productsList;
   }
 
-  async fetchProductDetail(productId: number): Promise<ProductDto> {
+  async fetchProductDetail(
+    productId: number,
+    signal: AbortSignal,
+  ): Promise<ProductDto> {
     const product = await this.httpClient.get<ProductDto>(
       Env.DUMMY_API_URL,
       `/products/${productId}`,
+      { signal },
     );
 
     return product;
   }
 
-  async fetchProductsCategories(): Promise<ProductCategoryDto[]> {
+  async fetchProductsCategories(
+    signal: AbortSignal,
+  ): Promise<ProductCategoryDto[]> {
     const categories = await this.httpClient.get<ProductCategoryDto[]>(
       Env.DUMMY_API_URL,
       '/products/categories',
+      { signal },
     );
 
     return categories;
