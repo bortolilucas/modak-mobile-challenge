@@ -9,6 +9,8 @@ import NativeCalendarModule from '@/specs/NativeCalendarModule';
 import { createTestingQueryProvider } from '@/testing/query';
 import { isAndroid } from '@/utils/platform';
 
+jest.mock('@/utils/platform');
+
 const mockNativeCalendarModule = NativeCalendarModule as jest.MockedObject<
   typeof NativeCalendarModule
 >;

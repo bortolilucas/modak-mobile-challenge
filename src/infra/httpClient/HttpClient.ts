@@ -1,7 +1,7 @@
 import type { QueryStringParams } from '@/utils/querystring';
 
 export type HttpClientConfig = {
-  body?: BodyInit_;
+  body?: Record<string, unknown>;
   headers?: HeadersInit_;
   params?: QueryStringParams;
 };

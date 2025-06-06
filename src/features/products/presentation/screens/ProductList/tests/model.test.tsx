@@ -15,6 +15,8 @@ import { useProductListViewModel } from '@/features/products/presentation/screen
 import { DeepLinkRoutes } from '@/navigation/routes';
 import { createTestingQueryProvider } from '@/testing/query';
 
+jest.mock('@/config/deeplink');
+
 describe('useProductListViewModel', () => {
   let mockRepository: MockProxy<ProductsRepository>;
 

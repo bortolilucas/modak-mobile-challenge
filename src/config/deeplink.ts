@@ -1,9 +1,10 @@
 import type { LinkingOptions } from '@react-navigation/native';
+import { Linking } from 'react-native';
 import SendIntentAndroid from 'react-native-send-intent';
 
 import type { ProductsParamList } from '@/features/products/routes';
 import { DeepLinkRoutes, Routes } from '@/navigation/routes';
-import { Linking, Platform } from 'react-native';
+import { isAndroid } from '@/utils/platform';
 
 const APP_DEEP_LINK = 'productsApp://';
 
@@ -22,7 +23,7 @@ const createDeepLink = (path: string) => `${APP_DEEP_LINK}${path}`;
 export const navigateWithDeepLink = (route: string) => {
   const url = createDeepLink(route);
 
-  if (Platform.OS === 'android') {
+  if (isAndroid()) {
     SendIntentAndroid.openAppWithUri(url);
   } else {
     Linking.openURL(url);

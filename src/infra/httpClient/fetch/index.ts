@@ -22,27 +22,30 @@ export class FetchHttpClient implements HttpClient {
       endpoint: string,
       { body, headers, params }: HttpClientConfig = {},
     ) => {
+      const url = `${hostname}${endpoint}${toQueryString(params)}`;
+
+      const requestBody = body && JSON.stringify(body);
+
+      let response: Response;
+      let data: T;
+
       try {
-        const url = `${hostname}${endpoint}${toQueryString(params)}`;
-
-        const requestBody = body && JSON.stringify(body);
-
-        const response = await fetch(url, {
+        response = await fetch(url, {
           method,
           headers,
           body: requestBody,
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new HttpResponseError(data, response.status);
-        }
-
-        return data as T;
+        data = await response.json();
       } catch (error) {
         throw new HttpGenericError(error);
       }
+
+      if (!response.ok) {
+        throw new HttpResponseError(data, response.status);
+      }
+
+      return data as T;
     };
   }
 }

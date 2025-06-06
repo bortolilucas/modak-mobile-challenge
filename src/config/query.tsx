@@ -2,13 +2,21 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
+  type DefaultOptions,
 } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { useBottomSheet } from '@/components/BottomSheet';
 import { getErrorMessage } from '@/infra/httpClient/fetch/errors';
 
-export function QueryProvider({ children }: React.PropsWithChildren) {
+type Props = {
+  defaultOptions?: DefaultOptions;
+};
+
+export function QueryProvider({
+  children,
+  defaultOptions,
+}: React.PropsWithChildren<Props>) {
   const bottomSheet = useBottomSheet();
 
   const [queryClient] = useState(() => {
@@ -21,7 +29,10 @@ export function QueryProvider({ children }: React.PropsWithChildren) {
       },
     });
 
-    return new QueryClient({ queryCache });
+    return new QueryClient({
+      queryCache,
+      defaultOptions,
+    });
   });
 
   return (
