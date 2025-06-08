@@ -8,16 +8,10 @@ const Container = (props: Partial<Props>) => (
   <ProductDetailView
     product={mockProduct}
     isLoading={false}
-    shouldShowReminderButton={false}
     onReminderPress={jest.fn()}
     {...props}
   />
 );
 
+export const Default = () => <Container />;
 export const Loading = () => <Container isLoading />;
-export const DefaultWithoutReminderButton = () => (
-  <Container shouldShowReminderButton={false} />
-);
-export const DefaultWithReminderButton = () => (
-  <Container shouldShowReminderButton />
-);

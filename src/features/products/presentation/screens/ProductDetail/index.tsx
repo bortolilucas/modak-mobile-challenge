@@ -7,14 +7,14 @@ export function ProductDetailScreen({
 }: ProductsScreenProps<'Products.ProductDetail'>) {
   const { id: productId } = route.params;
 
-  const { product, shouldShowReminderButton, isLoading, onReminderPress } =
-    useProductDetailViewModel({ productId });
+  const { product, isLoading, onReminderPress } = useProductDetailViewModel({
+    productId,
+  });
 
   return (
     <ProductDetailView
       product={product}
       isLoading={isLoading}
-      shouldShowReminderButton={shouldShowReminderButton}
       onReminderPress={onReminderPress}
     />
   );

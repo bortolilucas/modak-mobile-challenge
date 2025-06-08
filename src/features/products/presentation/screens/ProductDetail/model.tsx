@@ -7,7 +7,6 @@ import { ProductsDiGraph } from '@/features/products/di';
 import { getErrorMessage } from '@/infra/httpClient/fetch/errors';
 import type { ReminderEventData } from '@/specs/NativeCalendarModule';
 import NativeCalendarModule from '@/specs/NativeCalendarModule';
-import { isAndroid } from '@/utils/platform';
 
 type Props = DependenciesOf<ProductsDiGraph, 'repository'> & {
   productId: number;
@@ -35,7 +34,14 @@ export function useProductDetailViewModel({ repository, productId }: Props) {
         date: dateMs,
       };
 
-      await NativeCalendarModule.addReminderEvent(data);
+      const result = await NativeCalendarModule.addReminderEvent(data);
+
+      if (result.status === 'saved') {
+        bottomSheet.showMessage({
+          title: 'Success',
+          message: 'Purchase reminder added successfully',
+        });
+      }
     } catch (error) {
       bottomSheet.showMessage({
         title: 'Error',
@@ -47,7 +53,6 @@ export function useProductDetailViewModel({ repository, productId }: Props) {
   return {
     product,
     isLoading,
-    shouldShowReminderButton: isAndroid(),
     onReminderPress,
   };
 }

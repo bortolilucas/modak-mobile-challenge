@@ -13,14 +13,12 @@ import { plural } from '@/utils/strings';
 export type Props = {
   product: Product | undefined;
   isLoading: boolean;
-  shouldShowReminderButton: boolean;
   onReminderPress: () => void;
 };
 
 export function ProductDetailView({
   product,
   isLoading,
-  shouldShowReminderButton,
   onReminderPress,
 }: Props) {
   if (isLoading) {
@@ -86,11 +84,9 @@ export function ProductDetailView({
           />
         </View>
 
-        {shouldShowReminderButton && (
-          <Button style={styles.reminderButton} onPress={onReminderPress}>
-            Add purchase reminder
-          </Button>
-        )}
+        <Button style={styles.reminderButton} onPress={onReminderPress}>
+          Add purchase reminder
+        </Button>
       </SafeAreaView>
     </ScrollView>
   );

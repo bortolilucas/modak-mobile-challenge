@@ -55,7 +55,7 @@ export function Select<T>({
   return (
     <Pressable style={styles.select} disabled={isLoading} onPress={handlePress}>
       <Text size={TextSize.BODY} color={Colors.TEXT}>
-        {selectedValue?.label}
+        {isLoading ? 'Loading...' : selectedValue?.label}
       </Text>
 
       {isLoading ? (

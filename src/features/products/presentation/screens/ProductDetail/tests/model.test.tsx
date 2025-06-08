@@ -2,22 +2,23 @@ import { renderHook, waitFor } from '@testing-library/react-native';
 import dayjs from 'dayjs';
 import { mock, type MockProxy } from 'jest-mock-extended';
 
+import { useBottomSheet } from '@/components/BottomSheet';
 import { mockProduct } from '@/features/products/data/mocks/product';
 import type { ProductsRepository } from '@/features/products/domain/repository/ProductsRepository';
 import { useProductDetailViewModel } from '@/features/products/presentation/screens/ProductDetail/model';
 import NativeCalendarModule from '@/specs/NativeCalendarModule';
 import { createTestingQueryProvider } from '@/testing/query';
-import { isAndroid } from '@/utils/platform';
 
-jest.mock('@/utils/platform');
+jest.mock('@/components/BottomSheet');
+const mockUseBottomSheet = useBottomSheet as jest.Mock;
 
 const mockNativeCalendarModule = NativeCalendarModule as jest.MockedObject<
   typeof NativeCalendarModule
 >;
 
-const mockIsAndroid = isAndroid as jest.MockedFunction<typeof isAndroid>;
-
 describe('useProductDetailViewModel', () => {
+  const mockBottomSheetShowMessage = jest.fn();
+
   let mockRepository: MockProxy<ProductsRepository>;
 
   const currentDate = new Date('2025-06-04T09:00:00Z');
@@ -44,7 +45,9 @@ describe('useProductDetailViewModel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockRepository = mock<ProductsRepository>();
-    mockIsAndroid.mockReturnValue(false);
+    mockUseBottomSheet.mockReturnValue({
+      showMessage: mockBottomSheetShowMessage,
+    });
     mockRepository.getProductDetail.mockResolvedValue(mockProduct);
   });
 
@@ -55,17 +58,8 @@ describe('useProductDetailViewModel', () => {
       expect(result.current).toEqual({
         product: undefined,
         isLoading: true,
-        shouldShowReminderButton: false,
         onReminderPress: expect.any(Function),
       });
-    });
-
-    test('should shouldShowReminderButton be true if Android', () => {
-      mockIsAndroid.mockReturnValue(true);
-
-      const { result } = getHookInstance();
-
-      expect(result.current.shouldShowReminderButton).toBe(true);
     });
 
     test('should fetch product detail', async () => {
@@ -78,8 +72,10 @@ describe('useProductDetailViewModel', () => {
   });
 
   describe('when onReminderPress is called', () => {
-    test('should call addReminderEvent with correct data', async () => {
-      mockNativeCalendarModule.addReminderEvent.mockResolvedValue(undefined);
+    test('should call addReminderEvent with correct data and call bottom sheet success (saved status)', async () => {
+      mockNativeCalendarModule.addReminderEvent.mockResolvedValue({
+        status: 'saved',
+      });
 
       const { result } = getHookInstance();
 
@@ -96,6 +92,43 @@ describe('useProductDetailViewModel', () => {
           .add(1, 'day')
           .set('hour', 9)
           .valueOf(),
+      });
+      expect(mockBottomSheetShowMessage).toHaveBeenCalledWith({
+        title: 'Success',
+        message: 'Purchase reminder added successfully',
+      });
+    });
+
+    test('should call addReminderEvent and not call bottom sheet (other status)', async () => {
+      mockNativeCalendarModule.addReminderEvent.mockResolvedValue({
+        status: 'cancelled',
+      });
+
+      const { result } = getHookInstance();
+
+      await waitFor(() => {
+        expect(result.current.product).toEqual(mockProduct);
+      });
+      await result.current.onReminderPress();
+
+      expect(mockBottomSheetShowMessage).not.toHaveBeenCalled();
+    });
+
+    test('should call addReminderEvent and handle error', async () => {
+      mockNativeCalendarModule.addReminderEvent.mockRejectedValue(
+        new Error('Teste'),
+      );
+
+      const { result } = getHookInstance();
+
+      await waitFor(() => {
+        expect(result.current.product).toEqual(mockProduct);
+      });
+      await result.current.onReminderPress();
+
+      expect(mockBottomSheetShowMessage).toHaveBeenCalledWith({
+        title: 'Error',
+        message: 'Teste',
       });
     });
   });

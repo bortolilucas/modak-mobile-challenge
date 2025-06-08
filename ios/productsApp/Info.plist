@@ -64,5 +64,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>We need full access to calendar</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>We need write only access to calendar</string>
 </dict>
 </plist>

@@ -30,7 +30,6 @@ describe('ProductDetail screen', () => {
   const modelReturnValue: ReturnType<typeof useProductDetailViewModel> = {
     product: mockProduct,
     isLoading: false,
-    shouldShowReminderButton: false,
     onReminderPress: jest.fn(),
   };
 
