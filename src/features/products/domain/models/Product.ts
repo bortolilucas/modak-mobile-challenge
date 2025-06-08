@@ -37,7 +37,14 @@ export enum ProductSortBy {
   RATING_DESC = 'rating_desc',
 }
 
+export interface ProductList {
+  products: Product[];
+  page: number;
+  next?: number;
+}
+
 export interface ProductFilters {
   sortBy: ProductSortBy | '';
   category: string;
+  pageCount: number;
 }

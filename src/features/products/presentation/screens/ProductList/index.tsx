@@ -10,9 +10,11 @@ export function ProductListScreen() {
     isCategoriesLoading,
     isProductsLoading,
     isProductsRefreshing,
+    isFetchingProductsNextPage,
     onChangeFilters,
     onProductPress,
     onRefresh,
+    onProductsListEndReached,
   } = useProductListViewModel();
 
   return (
@@ -24,9 +26,11 @@ export function ProductListScreen() {
       isProductsLoading={isProductsLoading}
       isProductsRefreshing={isProductsRefreshing}
       isCategoriesLoading={isCategoriesLoading}
+      isFetchingProductsNextPage={isFetchingProductsNextPage}
       onChangeFilters={onChangeFilters}
       onProductPress={onProductPress}
       onRefresh={onRefresh}
+      onProductsListEndReached={onProductsListEndReached}
     />
   );
 }

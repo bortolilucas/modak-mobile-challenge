@@ -31,38 +31,81 @@ describe('ProductsRepositoryImpl', () => {
 
   describe('when getProductList is called', () => {
     describe('without category', () => {
-      test('should call fetchProducts api and return list of products', async () => {
-        mockApi.fetchProducts.mockResolvedValue(mockProductListDto);
+      test('should call fetchProducts api and return list of products (hasNext)', async () => {
+        mockApi.fetchProducts.mockResolvedValue({
+          ...mockProductListDto,
+          total: 20,
+          skip: 0,
+        });
 
         const result = await repository.getProductList(
+          1,
           mockFilters,
           abortController.signal,
         );
 
-        expect(result).toEqual(mockProductList);
+        expect(result).toEqual({
+          products: mockProductList,
+          page: 1,
+          next: 2,
+        });
         expect(mockApi.fetchProducts).toHaveBeenCalledWith(
-          mockProductParamsDto,
+          { ...mockProductParamsDto, skip: 0, limit: 10 },
           abortController.signal,
         );
       });
     });
 
     describe('with category', () => {
-      test('should call fetchProductsByCategory api and return list of products', async () => {
-        mockApi.fetchProductsByCategory.mockResolvedValue(mockProductListDto);
+      test('should call fetchProductsByCategory api and return list of products (hasNext)', async () => {
+        mockApi.fetchProductsByCategory.mockResolvedValue({
+          ...mockProductListDto,
+          total: 20,
+          skip: 0,
+        });
 
         const result = await repository.getProductList(
+          1,
           mockFiltersWithCategory,
           abortController.signal,
         );
 
-        expect(result).toEqual(mockProductList);
+        expect(result).toEqual({
+          products: mockProductList,
+          page: 1,
+          next: 2,
+        });
         expect(mockApi.fetchProductsByCategory).toHaveBeenCalledWith(
           mockFiltersWithCategory.category,
-          mockProductParamsDto,
+          { ...mockProductParamsDto, skip: 0, limit: 10 },
           abortController.signal,
         );
       });
+    });
+
+    test('should call fetchProductsByCategory api and return list of products (last page)', async () => {
+      mockApi.fetchProductsByCategory.mockResolvedValue({
+        ...mockProductListDto,
+        total: 20,
+        skip: 20,
+      });
+
+      const result = await repository.getProductList(
+        2,
+        mockFiltersWithCategory,
+        abortController.signal,
+      );
+
+      expect(result).toEqual({
+        products: mockProductList,
+        page: 2,
+        next: undefined,
+      });
+      expect(mockApi.fetchProductsByCategory).toHaveBeenCalledWith(
+        mockFiltersWithCategory.category,
+        { ...mockProductParamsDto, skip: 10, limit: 10 },
+        abortController.signal,
+      );
     });
   });
 

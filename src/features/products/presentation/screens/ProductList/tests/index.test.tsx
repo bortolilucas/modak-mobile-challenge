@@ -22,11 +22,13 @@ describe('ProductList screen', () => {
     isCategoriesLoading: false,
     isProductsLoading: false,
     isProductsRefreshing: false,
+    isFetchingProductsNextPage: false,
     sortByOptions: [],
     filters: mockEmptyFilters,
     onChangeFilters: jest.fn(),
     onProductPress: jest.fn(),
     onRefresh: jest.fn(),
+    onProductsListEndReached: jest.fn(),
   };
 
   const renderScreen = () => render(<ProductListScreen />);

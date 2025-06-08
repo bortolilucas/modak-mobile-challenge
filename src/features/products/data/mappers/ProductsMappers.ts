@@ -32,9 +32,15 @@ export const dtoToProduct = (product: ProductDto): Product =>
   );
 
 export const productFiltersToDto = (
+  page: number,
   filters: ProductFilters,
 ): ProductParamsDto => {
   const [sortBy, order] = filters.sortBy.split('_');
 
-  return { sortBy, order };
+  return {
+    sortBy,
+    order,
+    limit: filters.pageCount,
+    skip: filters.pageCount * (page - 1),
+  };
 };

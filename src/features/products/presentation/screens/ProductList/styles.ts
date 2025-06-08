@@ -4,8 +4,8 @@ import { scale, verticalScale } from '@/theme/scaling';
 
 const styles = StyleSheet.create({
   listContent: {
+    flexGrow: 1,
     paddingTop: verticalScale(2),
-    paddingBottom: verticalScale(10),
     paddingHorizontal: scale(20),
     gap: verticalScale(14),
   },
@@ -14,6 +14,14 @@ const styles = StyleSheet.create({
   },
   filters: {
     gap: verticalScale(6),
+  },
+  listFooter: {
+    paddingVertical: verticalScale(10),
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

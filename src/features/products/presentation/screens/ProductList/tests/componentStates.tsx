@@ -19,9 +19,11 @@ const Container = (props: Partial<Props>) => (
     isCategoriesLoading={false}
     isProductsLoading={false}
     isProductsRefreshing={false}
-    onChangeFilters={jest.fn()}
+    isFetchingProductsNextPage={false}
+    onChangeFilters={jest.fn(() => () => {})}
     onProductPress={jest.fn()}
     onRefresh={jest.fn()}
+    onProductsListEndReached={jest.fn()}
     {...props}
   />
 );
@@ -31,4 +33,7 @@ export const ProductsLoading = () => <Container isProductsLoading />;
 export const ProductsRefreshing = () => <Container isProductsRefreshing />;
 export const CategoriesLoading = () => (
   <Container isCategoriesLoading categoriesOptions={[]} />
+);
+export const ProductsFetchingNextPage = () => (
+  <Container isFetchingProductsNextPage />
 );

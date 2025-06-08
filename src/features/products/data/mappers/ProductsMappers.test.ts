@@ -24,7 +24,7 @@ describe('ProductsMappers test', () => {
     test('should convert to dto', () => {
       const filters = mockFilters;
 
-      const result = productFiltersToDto(filters);
+      const result = productFiltersToDto(1, filters);
 
       expect(result).toEqual(mockProductParamsDto);
     });

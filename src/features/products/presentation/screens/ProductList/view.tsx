@@ -1,7 +1,7 @@
-import { FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Select } from '@/components';
+import { Select, Text, TextSize } from '@/components';
 import type { SelectItem } from '@/components/Select/types';
 import {
   Product,
@@ -9,20 +9,23 @@ import {
 } from '@/features/products/domain/models/Product';
 import { ProductListItem } from '@/features/products/presentation/components/ProductListItem';
 import styles from '@/features/products/presentation/screens/ProductList/styles';
+import { Colors } from '@/theme/colors';
 
 export type Props = {
   products: Product[];
   categoriesOptions: SelectItem[];
   sortByOptions: SelectItem[];
+  isCategoriesLoading: boolean;
   isProductsLoading: boolean;
   isProductsRefreshing: boolean;
-  isCategoriesLoading: boolean;
+  isFetchingProductsNextPage: boolean;
   filters: ProductFilters;
   onChangeFilters: <T extends keyof ProductFilters>(
     name: T,
   ) => (value: ProductFilters[T]) => void;
   onProductPress: (product: Product) => void;
   onRefresh: () => void;
+  onProductsListEndReached: () => void;
 };
 
 const loadingItems = Array.from({ length: 6 }).map(
@@ -41,10 +44,12 @@ export function ProductListView({
   isCategoriesLoading,
   isProductsLoading,
   isProductsRefreshing,
+  isFetchingProductsNextPage,
   filters,
   onChangeFilters,
   onProductPress,
   onRefresh,
+  onProductsListEndReached,
 }: Props) {
   return (
     <FlatList
@@ -78,9 +83,24 @@ export function ProductListView({
           onPress={onProductPress}
         />
       )}
-      ListFooterComponent={<SafeAreaView edges={{ bottom: 'maximum' }} />}
+      ListFooterComponent={
+        <SafeAreaView edges={{ bottom: 'maximum' }} style={styles.listFooter}>
+          {isFetchingProductsNextPage && (
+            <ActivityIndicator size="large" color={Colors.PRIMARY} />
+          )}
+        </SafeAreaView>
+      }
+      ListEmptyComponent={
+        <View style={styles.emptyContainer}>
+          <Text size={TextSize.H3} color={Colors.PRIMARY}>
+            No products found
+          </Text>
+        </View>
+      }
       refreshing={isProductsRefreshing}
       onRefresh={isProductsLoading ? undefined : onRefresh}
+      onEndReachedThreshold={0.7}
+      onEndReached={onProductsListEndReached}
     />
   );
 }

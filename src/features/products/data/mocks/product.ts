@@ -13,6 +13,8 @@ import {
 export const mockProductParamsDto: ProductParamsDto = {
   sortBy: 'price',
   order: 'asc',
+  limit: 10,
+  skip: 0,
 };
 
 export const mockProductDto: ProductDto = {
@@ -74,14 +76,17 @@ export const mockProductList: Product[] = [mockProduct];
 export const mockEmptyFilters: ProductFilters = {
   sortBy: '',
   category: '',
+  pageCount: 10,
 };
 
 export const mockFilters: ProductFilters = {
   sortBy: ProductSortBy.PRICE_ASC,
   category: '',
+  pageCount: 10,
 };
 
 export const mockFiltersWithCategory: ProductFilters = {
   sortBy: ProductSortBy.PRICE_ASC,
   category: mockCategory.slug,
+  pageCount: 10,
 };

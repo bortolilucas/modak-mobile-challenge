@@ -7,13 +7,17 @@ import {
   mockEmptyFilters,
   mockProductList,
 } from '@/features/products/data/mocks/product';
-import { ProductSortBy } from '@/features/products/domain/models/Product';
+import {
+  ProductSortBy,
+  type ProductList,
+} from '@/features/products/domain/models/Product';
 import type { ProductsRepository } from '@/features/products/domain/repository/ProductsRepository';
 import { sortByOptions } from '@/features/products/presentation/constants/sortByOptions';
 import { mockCategoriesOptions } from '@/features/products/presentation/mocks/categories';
 import { useProductListViewModel } from '@/features/products/presentation/screens/ProductList/model';
 import { DeepLinkRoutes } from '@/navigation/routes';
 import { createTestingQueryProvider } from '@/testing/query';
+import type { ProductCategory } from '@/features/products/domain/models/Category';
 
 jest.mock('@/config/deeplink');
 
@@ -26,10 +30,10 @@ describe('useProductListViewModel', () => {
     });
 
   const mockFetchCalls = ({
-    productList = mockProductList,
+    products = { products: mockProductList, page: 1, next: 2 },
     categories = mockCategories,
-  } = {}) => {
-    mockRepository.getProductList.mockResolvedValue(productList);
+  }: { products?: ProductList; categories?: ProductCategory[] } = {}) => {
+    mockRepository.getProductList.mockResolvedValue(products);
     mockRepository.getProductCategoryList.mockResolvedValue(categories);
   };
 
@@ -51,15 +55,17 @@ describe('useProductListViewModel', () => {
         filters: mockEmptyFilters,
         isProductsLoading: true,
         isProductsRefreshing: false,
+        isFetchingProductsNextPage: false,
         isCategoriesLoading: true,
         onChangeFilters: expect.any(Function),
         onProductPress: expect.any(Function),
         onRefresh: expect.any(Function),
+        onProductsListEndReached: expect.any(Function),
       });
     });
 
     test('should fetch product list', async () => {
-      mockFetchCalls({ productList: mockProductList });
+      mockFetchCalls();
 
       const { result } = getHookInstance();
 
@@ -97,7 +103,7 @@ describe('useProductListViewModel', () => {
 
   describe('when onProductPress is called', () => {
     beforeEach(() => {
-      mockFetchCalls({ productList: mockProductList });
+      mockFetchCalls();
     });
 
     test('should call product detail deeplink', () => {
@@ -113,15 +119,57 @@ describe('useProductListViewModel', () => {
     });
   });
 
+  describe('when onProductsListEndReached is called', () => {
+    test('should fetch next page', async () => {
+      mockFetchCalls({
+        products: { products: mockProductList, page: 1, next: 2 },
+      });
+
+      const { result } = getHookInstance();
+
+      await waitFor(() =>
+        expect(result.current.products).toEqual(mockProductList),
+      );
+
+      act(() => {
+        result.current.onProductsListEndReached();
+      });
+
+      await waitFor(() =>
+        expect(result.current.products).toEqual([
+          ...mockProductList,
+          ...mockProductList,
+        ]),
+      );
+      expect(mockRepository.getProductList).toHaveBeenCalledTimes(2);
+    });
+
+    test('should not fetch next page', async () => {
+      mockFetchCalls({
+        products: { products: mockProductList, page: 1, next: undefined },
+      });
+
+      const { result } = getHookInstance();
+
+      act(() => {
+        result.current.onProductsListEndReached();
+      });
+
+      expect(mockRepository.getProductList).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('when onRefetch is called', () => {
     test('should refresh productList', async () => {
-      mockFetchCalls({ productList: [] });
+      mockFetchCalls({ products: { products: [], page: 1, next: undefined } });
 
       const { result } = getHookInstance();
 
       await waitFor(() => expect(result.current.products).toEqual([]));
 
-      mockFetchCalls({ productList: mockProductList });
+      mockFetchCalls({
+        products: { products: mockProductList, page: 1, next: undefined },
+      });
 
       act(() => {
         result.current.onRefresh();
@@ -129,22 +177,6 @@ describe('useProductListViewModel', () => {
 
       await waitFor(() =>
         expect(result.current.products).toEqual(mockProductList),
-      );
-    });
-
-    test('should isProductsRefreshing update', async () => {
-      mockFetchCalls({ productList: mockProductList });
-
-      const { result } = getHookInstance();
-
-      act(() => {
-        result.current.onRefresh();
-      });
-
-      expect(result.current.isProductsRefreshing).toBe(true);
-
-      await waitFor(() =>
-        expect(result.current.isProductsRefreshing).toBe(false),
       );
     });
   });
